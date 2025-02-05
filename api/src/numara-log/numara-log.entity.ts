@@ -1,5 +1,5 @@
-// api/src/numara-log/numara-log.entity.ts
-import { Entity, PrimaryGeneratedColumn, Column, ManyToOne } from 'typeorm';
+// numara-log.entity.ts
+import { Entity, PrimaryGeneratedColumn, Column, ManyToOne, JoinColumn } from 'typeorm';
 import { Numara } from '../numaralar/numara.entity';
 
 @Entity()
@@ -13,7 +13,10 @@ export class NumaraLog {
   @Column({ type: 'timestamp', nullable: true })
   cevrimIciBitis: Date;
 
-  // Logun ait olduğu numara
-  @ManyToOne(() => Numara, (numara) => numara.loglar)
+  @ManyToOne(() => Numara, numara => numara.loglar)
+  @JoinColumn({ name: 'numaraId' })
   numara: Numara;
+
+  @Column()
+  numaraId: number;
 }
